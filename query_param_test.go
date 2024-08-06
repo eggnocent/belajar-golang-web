@@ -36,3 +36,15 @@ func MultipleParameterValues(writer http.ResponseWriter, request *http.Request) 
 	names := query["name"]
 	fmt.Fprintln(writer, strings.Join(names, ","))
 }
+
+func TestMultipleParameterValues(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/hello?name=egi&name=uzan&name=fian", nil)
+	recorder := httptest.NewRecorder()
+
+	MultipleParameterValues(recorder, request)
+
+	response := recorder.Result()
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+}
