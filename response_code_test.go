@@ -12,7 +12,7 @@ func ResponseCode(writer http.ResponseWriter, request *http.Request) {
 	nama := request.URL.Query().Get("name")
 	if nama == "" {
 		writer.WriteHeader(http.StatusBadRequest)
-		fmt.Println(writer, "name is empty")
+		fmt.Fprintln(writer, "name is empty")
 	} else {
 		fmt.Fprintf(writer, "hello %s", nama)
 	}
@@ -24,10 +24,10 @@ func TestResponseCode(t *testing.T) {
 
 	ResponseCode(recorder, request)
 
-	response := request.Response
+	response := recorder.Result()
 	body, _ := io.ReadAll(response.Body)
 
 	fmt.Println(response.StatusCode)
 	fmt.Println(response.Status)
-	fmt.Println(body)
+	fmt.Println(string(body))
 }
