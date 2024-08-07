@@ -25,3 +25,8 @@ func TestRequestHeader(t *testing.T) {
 	body, _ := io.ReadAll(response.Body)
 	fmt.Println(string(body))
 }
+
+func ResponseHeader(writer http.ResponseWriter, requext *http.Request) {
+	writer.Header().Add("X-powered-by", "egi wiratama")
+	fmt.Fprint(writer, "ok")
+}
