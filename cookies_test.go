@@ -14,3 +14,12 @@ func SetCookie(writer http.ResponseWriter, request *http.Request) {
 	http.SetCookie(writer, cookie)
 	fmt.Fprint(writer, "suksek buat kuki")
 }
+
+func GetCookie(writer http.ResponseWriter, request *http.Request) {
+	cookie, err := request.Cookie("X-PZN-Name")
+	if err != nil {
+		fmt.Println(writer, "No Cookie")
+	} else {
+		fmt.Println(writer, "Hello %s", cookie.Value)
+	}
+}
