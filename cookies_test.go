@@ -18,8 +18,8 @@ func SetCookie(writer http.ResponseWriter, request *http.Request) {
 func GetCookie(writer http.ResponseWriter, request *http.Request) {
 	cookie, err := request.Cookie("X-PZN-Name")
 	if err != nil {
-		fmt.Println(writer, "No Cookie")
+		fmt.Fprintf(writer, "No Cookie")
 	} else {
-		fmt.Println(writer, "Hello %s", cookie.Value)
+		fmt.Fprintf(writer, "Hello %s", cookie.Value)
 	}
 }
