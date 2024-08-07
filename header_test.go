@@ -30,3 +30,18 @@ func ResponseHeader(writer http.ResponseWriter, requext *http.Request) {
 	writer.Header().Add("X-powered-by", "egi wiratama")
 	fmt.Fprint(writer, "ok")
 }
+
+func TestResponseHeader(t *testing.T) {
+	request := httptest.NewRequest(http.MethodPost, "http://localhost:8080/", nil)
+	request.Header.Add("content-type", "application/json")
+
+	recorder := httptest.NewRecorder()
+
+	ResponseHeader(recorder, request)
+
+	response := recorder.Result()
+	body, _ := io.ReadAll(response.Body)
+	fmt.Println(string(body))
+
+	fmt.Println(response.Header.Get("x-powered-by"))
+}
