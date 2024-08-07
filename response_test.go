@@ -6,11 +6,8 @@ import (
 )
 
 func FormPost(writer http.ResponseWriter, request *http.Request) {
-	// parsing manual
-	err := request.ParseForm()
-	if err != nil {
-		panic(err)
-	}
+	// parsing otomatis
+	request.PostFormValue("firstname")
 
 	firstName := request.PostForm.Get("firstName")
 	lastName := request.PostForm.Get("lastName")
