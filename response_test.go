@@ -15,13 +15,13 @@ func FormPost(writer http.ResponseWriter, request *http.Request) {
 
 	firstName := request.PostForm.Get("firstName")
 	lastName := request.PostForm.Get("lastName")
-	fmt.Fprintf(writer, "%s %s", firstName, lastName)
+	fmt.Fprintf(writer, "Hello %s %s", firstName, lastName)
 }
 
 func TestFormPost(t *testing.T) {
 	requestBody := strings.NewReader("firstName=egi&lastName=wira")
 	request := httptest.NewRequest(http.MethodPost, "http://localhost:8080", requestBody)
-	request.Header.Add("Content-type", "application/x-www-form-url-encoded")
+	request.Header.Add("Content-type", "application/x-www-form-urlencoded")
 
 	recorder := httptest.NewRecorder()
 
