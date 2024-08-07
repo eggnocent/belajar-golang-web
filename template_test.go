@@ -6,8 +6,8 @@ import (
 )
 
 func SimpleHTML(writer http.ResponseWriter, request *http.Request) {
-	templateText := "<html><body>{{.}}</body></html>"    // Menggunakan tanda kutip ganda
-	t, err := template.New("SIMPLE").Parse(templateText) // Menggunakan .Parse bukan .parse
+	templateText := "<html><body>{{.}}</body></html>"
+	t, err := template.New("SIMPLE").Parse(templateText)
 	if err != nil {
 		panic(err)
 	}
