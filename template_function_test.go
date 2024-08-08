@@ -36,8 +36,7 @@ func TestTemplateFunction(t *testing.T) {
 }
 
 func TemplateFunctionCreateGlobal(writer http.ResponseWriter, request *http.Request) {
-	t := template.New("FUNCTION")
-	t = t.Funcs(map[string]interface{}{
+	t := template.New("FUNCTION").Funcs(map[string]interface{}{
 		"upper": func(value string) string {
 			return strings.ToUpper(value)
 		},
@@ -56,17 +55,19 @@ func TestTemplateFunctionCreateGlobal(t *testing.T) {
 	TemplateFunctionCreateGlobal(recorder, request)
 
 	body, _ := io.ReadAll(recorder.Result().Body)
-	fmt.Println(string(body))
+	fmt.Println(string(body)) // Output: MIKEL
 }
 
 func TemplateFunctionCreateGlobalPipeline(writer http.ResponseWriter, request *http.Request) {
-	t := template.New("FUNCTION")
-	t = t.Funcs(map[string]interface{}{
+	t := template.New("FUNCTION").Funcs(map[string]interface{}{
 		"sayHello": func(name string) string {
-			return "Hello" + name
+			return "Hello " + name
+		},
+		"upper": func(value string) string {
+			return strings.ToUpper(value)
 		},
 	})
-	t = template.Must(t.Parse(`{{ sayHello .name | upper }}`))
+	t = template.Must(t.Parse(`{{ sayHello .Name | upper }}`))
 
 	t.ExecuteTemplate(writer, "FUNCTION", MyPage{
 		Name: "Edgar",
