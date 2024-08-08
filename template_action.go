@@ -10,11 +10,6 @@ import (
 	"testing"
 )
 
-type Page struct {
-	Title string
-	Name  string
-}
-
 // TemplateActionIf handles the HTTP request and renders the template
 func TemplateActionIf(writer http.ResponseWriter, request *http.Request) {
 	t := template.Must(template.ParseFiles("./templates/if.gohtml"))
