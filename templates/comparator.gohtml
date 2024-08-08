@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+</head>
+
+<body>
+    {{if ge .FinalValue 90}}
+        <h1>Heloww</h1>
+    {{else if ge .FinalValue 60}}
+        <h1>morn</h1>
+    {{else}}
+        <h1>even</h1>
+    {{end}}
+</body>
+</html>
