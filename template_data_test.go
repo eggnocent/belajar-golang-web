@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -25,4 +26,19 @@ func TestTemplateDataMap(t *testing.T) {
 
 	body, _ := io.ReadAll(recorder.Result().Body)
 	fmt.Println(string(body))
+}
+
+func TemplateAction(writer http.ResponseWriter, request *http.Request) {
+	t := template.New("name.gohtml").Funcs(template.FuncMap{
+		"upper": strings.ToUpper,
+	})
+	t = template.Must(t.ParseFiles("./templates/name.gohtml"))
+
+	data := map[string]interface{}{
+		"Title":    "Template dari map",
+		"Nama":     "Crarrson",
+		"IsMember": true,
+		"Items":    []string{"item 1", "item 2", "item 3"},
+	}
+	t.ExecuteTemplate(writer, "name.gohtml", data)
 }
