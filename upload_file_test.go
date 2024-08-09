@@ -1,15 +1,12 @@
 package belajargolangweb
 
 import (
-	"html/template"
 	"net/http"
 	"testing"
 )
 
-var myTemplatesUpload = template.Must(template.ParseFiles("templates/upload_form.html"))
-
 func UploadForm(writer http.ResponseWriter, request *http.Request) {
-	err := myTemplatesUpload.ExecuteTemplate(writer, "upload_form.html", nil)
+	err := myTemplates.ExecuteTemplate(writer, "upload.form.gohtml", nil)
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
