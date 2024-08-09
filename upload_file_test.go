@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-// Declare a global variable to store parsed templates
 var myTemplatesUpload = template.Must(template.ParseFiles("templates/upload_form.html"))
 
 func UploadForm(writer http.ResponseWriter, request *http.Request) {
