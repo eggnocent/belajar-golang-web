@@ -1,14 +1,19 @@
 package belajargolangweb
 
 import (
+	"html/template"
 	"net/http"
 	"testing"
 )
 
+// Declare a global variable to store parsed templates
+var myTemplatesUpload = template.Must(template.ParseFiles("templates/upload_form.html"))
+
 func UploadForm(writer http.ResponseWriter, request *http.Request) {
-	err := myTemplates.ExecuteTemplate(writer, "upload.form.gohtml", nil)
+	err := myTemplatesUpload.ExecuteTemplate(writer, "upload_form.html", nil)
 	if err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 

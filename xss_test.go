@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var myTemplates = template.Must(template.ParseFiles("templates/post.gohtml"))
+var myTemplates = template.Must(template.ParseFiles("templates/upload_form.html"))
 
 func TemplateAutoEscape(writer http.ResponseWriter, request *http.Request) {
 	myTemplates.ExecuteTemplate(writer, "post.gohtml", map[string]interface{}{
