@@ -1,7 +1,9 @@
 package belajargolangweb
 
 import (
+	"io"
 	"net/http"
+	"os"
 	"testing"
 )
 
@@ -11,6 +13,27 @@ func UploadForm(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func Upload(writer http.ResponseWriter, request *http.Request) {
+	// request.ParseMUltipartForm(32 << 20)
+	file, fileHeader, err := request.FormFile("file")
+	if err != nil {
+		panic(err)
+	}
+	fileDestination, err := os.Create("./resources/" + fileHeader.Filename)
+	if err != nil {
+		panic(err)
+	}
+	_, err = io.Copy(fileDestination, file)
+	if err != nil {
+		panic(err)
+	}
+	name := request.PostFormValue("name")
+	myTemplates.ExecuteTemplate(writer, "upload.success.gohtml", map[string]interface{}{
+		"Name": name,
+		"File": "/static" + fileHeader.Filename,
+	})
 }
 
 func TestUploadForm(t *testing.T) {
