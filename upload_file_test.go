@@ -6,7 +6,7 @@ import (
 )
 
 func UploadForm(writer http.ResponseWriter, request *http.Request) {
-	myTemplates.ExecuteTemplate(writer, "upload_form.html", nil)
+	myTemplates.ExecuteTemplate(writer, "upload.form.gohtml", nil)
 }
 
 func TestUploadForm(t *testing.T) {
