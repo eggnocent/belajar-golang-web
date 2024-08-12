@@ -14,6 +14,10 @@ func DownloadFile(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprint(writer, "Bad Request")
 		return
 	}
+
+	// Perbaiki kesalahan penulisan "Content-Disposition"
+	writer.Header().Add("Content-Disposition", "attachment; filename=\""+file+"\"")
+
 	http.ServeFile(writer, request, "./resources/"+file)
 }
 
