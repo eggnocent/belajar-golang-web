@@ -1,8 +1,13 @@
 package belajargolangweb
 
 import (
+	"bytes"
+	_ "embed"
+	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 )
@@ -32,7 +37,7 @@ func Upload(writer http.ResponseWriter, request *http.Request) {
 	name := request.PostFormValue("name")
 	myTemplates.ExecuteTemplate(writer, "upload.success.gohtml", map[string]interface{}{
 		"Name": name,
-		"File": "/static" + fileHeader.Filename,
+		"File": "/static/" + fileHeader.Filename,
 	})
 }
 
@@ -50,4 +55,26 @@ func TestUploadForm(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+//go:embed resources/IMG_3913_11zon.jpg
+var uploadFileTest []byte
+
+func TestUploadFile(t *testing.T) {
+	body := new(bytes.Buffer)
+
+	writer := multipart.NewWriter(body)
+	writer.WriteField("name", "Arya Rahmat")
+	file, _ := writer.CreateFormFile("file", "CONTOHUPLOAD.png")
+	file.Write(uploadFileTest)
+	writer.Close()
+
+	request := httptest.NewRequest(http.MethodPost, "http://localhost:8080/upload", body)
+	request.Header.Set("Content-Type", writer.FormDataContentType())
+	recorder := httptest.NewRecorder()
+
+	Upload(recorder, request)
+
+	bodyResponse, _ := io.ReadAll(recorder.Result().Body)
+	fmt.Println(string(bodyResponse))
 }
