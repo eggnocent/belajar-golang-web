@@ -38,7 +38,10 @@ func Upload(writer http.ResponseWriter, request *http.Request) {
 
 func TestUploadForm(t *testing.T) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/form", UploadForm)
+	mux.HandleFunc("/", UploadForm)
+	mux.HandleFunc("/upload", Upload)
+	mux.Handle("/static", http.StripPrefix("/static", http.FileServer(http.Dir("./resources"))))
+
 	server := http.Server{
 		Addr:    "localhost:8080",
 		Handler: mux,
